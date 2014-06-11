@@ -4,3 +4,10 @@
  *= require_self
  */
 
+.person-div{
+    padding: 1em;
+}
+
+.person-attributes{
+    padding-left: 1em;
+}

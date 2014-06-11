@@ -12,6 +12,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
+gem 'ejs', '~> 1.1.1'
 gem 'spring', group: :development
 
 group :development, :test do

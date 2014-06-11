@@ -11,7 +11,7 @@ Run the app locally with `rails s`.
 
 * Import stories from `resources/stories.csv`
 
-# Project
+# Projectgit
 
 You work at an organization where there is a back-end team that writes APIs, and an front-end team that writes 
 javascript apps.  You are on the team that writes the js app.
