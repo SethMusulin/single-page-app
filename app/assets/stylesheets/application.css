@@ -11,3 +11,7 @@
 .person-attributes{
     padding-left: 1em;
 }
+
+.form-label{
+    width: 100px;
+}
