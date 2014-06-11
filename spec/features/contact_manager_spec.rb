@@ -21,4 +21,14 @@ feature 'The one-page contact manager app' do
     expect(page).to have_content("Edna Example")
   end
 
+  scenario 'People can be added', js: true do
+    visit '/'
+    fill_in 'First Name:', :with => 'Bob'
+    fill_in 'Last Name:', :with => 'Harley'
+    fill_in 'Address:', :with => 'Places Here and There'
+    click_on 'Create Person'
+
+    expect(page).to have_content("Bob Harley")
+    expect(page).to have_content("Places Here and There")
+  end
 end
