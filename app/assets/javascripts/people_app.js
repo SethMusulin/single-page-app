@@ -1,11 +1,11 @@
 window.PeopleApp = {
 
   initialize: function (path) {
-    $.getJSON(path, this.printAllPeople);
+    $.getJSON(path, this.printPeople);
     $(document).on("submit", "[data-behavior=create-person]", this.addPersonForm.bind(this));
   },
 
-  printAllPeople: function (response) {
+  printPeople: function (response) {
     $("[data-container=main]").append(JST['layouts/new']({url: response._links.self.href}));
 
 
@@ -17,20 +17,22 @@ window.PeopleApp = {
   addPersonForm: function (event) {
     event.preventDefault();
 
+    var form = event.target
+
     var person_data = {};
-    $.each(event.target, function(){
+    $.each(form, function(){
       person_data[this.name] = this.value;
     });
-    var form = event.target
-    form.reset();
-    $.post(event.target.action, JSON.stringify(person_data), this.successfulPostOrNot,'json');
+
+
+
+    var jqxhr = $.post(event.target.action, JSON.stringify(person_data), 'json');
+
+    jqxhr.done(function (response) {this.successfulPost(form, response);}.bind(this));
   },
 
-  successfulPostOrNot: function (response) {
+  successfulPost: function (form, response) {
+    form.reset();
     $("[data-container=people]").append(JST['layouts/index'](response));
-
-    //if response is the stuff we inputed the it's successful
-    //then we append
-    //if it's an error or something it's not
   }
 };
