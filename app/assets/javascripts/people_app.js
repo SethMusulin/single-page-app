@@ -10,14 +10,18 @@ window.PeopleApp = {
 
 
     $.each(response._embedded.people, function(){
-      $("[data-container=people]").append(JST['layouts/index'](this));
+      $html = $(JST['layouts/index'](this))
+
+      var person = new PersonView(this.first_name, this.last_name, this.address, this._links.self.href, $html );
+
+      $("[data-container=people]").append($html);
     });
   },
 
   addPersonForm: function (event) {
     event.preventDefault();
 
-    var form = event.target
+    var form = event.target;
 
     var person_data = {};
     $.each(form, function(){
@@ -33,6 +37,11 @@ window.PeopleApp = {
 
   successfulPost: function (form, response) {
     form.reset();
-    $("[data-container=people]").append(JST['layouts/index'](response));
+
+    $html = $(JST['layouts/index'](response));
+
+    var person = new PersonView(response.first_name, response.last_name, response.address, response._links.self.href, $html );
+
+    $("[data-container=people]").append($html);
   }
 };
