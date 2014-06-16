@@ -6,12 +6,12 @@ function PersonView(firstName, lastName, address, url, $personDiv) {
   this.$personDiv = $personDiv;
 
   $personDiv.on("click", "[data-behavior=edit-person]", this.clickedEdit.bind(this));
-  $(document).on("submit", "[data-behavior=update-person]", this.clickedEditSubmit.bind(this));
+  $personDiv.on("submit", "[data-behavior=update-person]", this.clickedEditSubmit.bind(this));
 }
 
 PersonView.prototype.clickedEdit = function () {
   event.preventDefault();
-  $(this.$personDiv).replaceWith(JST['layouts/edit'](this));
+  $(this.$personDiv).html(JST['layouts/edit'](this));
 };
 
 PersonView.prototype.clickedEditSubmit = function () {
@@ -26,21 +26,17 @@ PersonView.prototype.clickedEditSubmit = function () {
 
   var jqxr = $.ajax({
       type: "PATCH",
-      url: form.url,
-      data: JSON.stringify(form),
+      url: form.action,
+      data: JSON.stringify(person_data),
       dataType: 'json'
     }
   )
 
   jqxr.done(function (response) {
+    var $html = $(JST['layouts/index'](response));
 
-    $html = $(JST['layouts/index'](response));
-
-
-
-    $("[data-container=people]").append($html);
-  });
-
+    $(this.$personDiv).html($html);
+  }.bind(this));
 
 };
 

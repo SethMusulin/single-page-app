@@ -8,13 +8,14 @@ window.PeopleApp = {
   printPeople: function (response) {
     $("[data-container=main]").append(JST['layouts/new']({url: response._links.self.href}));
 
-
     $.each(response._embedded.people, function(){
-      $html = $(JST['layouts/index'](this))
+      var $personDiv = $("<div class='person person-div' data-container='person'>")
+      var $html = $(JST['layouts/index'](this))
+      $personDiv.append($html)
 
-      var person = new PersonView(this.first_name, this.last_name, this.address, this._links.self.href, $html );
+      var person = new PersonView(this.first_name, this.last_name, this.address, this._links.self.href, $personDiv );
 
-      $("[data-container=people]").append($html);
+      $("[data-container=people]").append($personDiv);
     });
   },
 
